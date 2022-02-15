@@ -44,7 +44,10 @@ app = Flask(__name__)
 @app.route("/", defaults={"path": ""})
 @app.route("/<path:path>")
 def catch_all(path):
-    return make_response(jsonify(get_np()), 200)
+    res = make_response(jsonify(get_np()), 200)
+    res.headers["Access-Control-Allow-Origin"] = "*"
+    res.headers["Access-Control-Allow-Credentials"] : true
+    return res
 
 if __name__ == '__main__':
     app.run(debug=True)
