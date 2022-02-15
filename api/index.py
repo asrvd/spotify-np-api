@@ -10,9 +10,9 @@ def get_token():
     '''Get a new access token'''
     r = requests.post('https://accounts.spotify.com/api/token', data={
         'grant_type': 'refresh_token',
-        'refresh_token': 'AQCexYh0TaRjBqNBtHP0TFqBo0W-go753coL8IfmirUNuZIGx7rCMwqcL7TU7Hf4VZWLQSQYmqA3e7AvYS0PeUlvX6JV4Yyd3zWgTU7nNvdGynV3K7JY6SxmKX7jYB1Oiko',
-        'client_id': 'a4596c8dfa19468693d1421a3a02d561',
-        'client_secret': 'ae8083f9ebe34a488831866c4fee3307',
+        'refresh_token': getenv('REFRESH_TOKEN'),
+        'client_id': getenv('CLIENT_ID'),
+        'client_secret': getenv('CLIENT_SECRET'),
     })
     try:
         return r.json()['access_token']
