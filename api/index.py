@@ -37,7 +37,7 @@ def get_np():
     return {
         'artist': item['artists'][0]['name'].replace('&', '&amp;'),
         'song': item['name'].replace('&', '&amp;'),
-        'url' : item['external_urls']['spotify'],
+        'url' : item['external_urls']['spotify'].replace('&', '&amp;'),
     }
 
 app = Flask(__name__)
