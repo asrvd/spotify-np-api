@@ -29,15 +29,23 @@ def spotify_request(endpoint):
     return {} if r.status_code == 204 else r.json()
 
 def get_np():
-    data = spotify_request('me/player/currently-playing')
-    if data:
-        item = data['item']
+    data1 = spotify_request('me/player/currently-playing')
+    data2 = spotify_request('me/top/tracks?limit=1&time_range=short_term')
+    if data1:
+        item = data1['item']
     else:
         item = spotify_request('me/player/recently-played?limit=3')['items'][0]['track']
     return {
-        'artist': item['artists'][0]['name'].replace('&', '&amp;'),
-        'song': item['name'].replace('&', '&amp;'),
-        'url' : item['external_urls']['spotify'].replace('&', '&amp;'),
+        'np': {
+            'artist': item['artists'][0]['name'].replace('&', '&amp;'),
+            'song': item['name'].replace('&', '&amp;'),
+            'url' : item['external_urls']['spotify'],
+        },
+        'top': {
+            'artist': data2['items'][0]['artists'][0]['name'].replace('&', '&amp;'),
+            'song': data2['items'][0]['name'].replace('&', '&amp;'),
+            'url' : data2['items'][0]['external_urls']['spotify'],
+        }
     }
 
 app = Flask(__name__)
