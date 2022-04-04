@@ -38,7 +38,7 @@ def get_all_top():
             'artist': item['artists'][0]['name'].replace('&', '&amp;'),
             'song': item['name'].replace('&', '&amp;'),
             'url': item['external_urls']['spotify'],
-            'image': item['images'][1]['url']
+            'image': item['external_urls']['images'][1]['url']
         }
         top_list.append(dict)
     return top_list.reverse()
