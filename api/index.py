@@ -41,7 +41,6 @@ def get_all_top():
             'image': item['album']['images'][1]['url']
         }
         top_list.append(dict)
-    top_list.reverse()
     return top_list
 
 def get_np():
