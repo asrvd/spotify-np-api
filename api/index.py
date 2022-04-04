@@ -28,6 +28,21 @@ def spotify_request(endpoint):
     )
     return {} if r.status_code == 204 else r.json()
 
+def get_all_top():
+    dt = spotify_request('me/top/tracks?limit=20&time_range=short_term')
+    top_list = []
+    if dt:
+        items = dt['items']
+    for item in items:
+        dict = {
+            'artist': item['artists'][0]['name'].replace('&', '&amp;'),
+            'song': item['name'].replace('&', '&amp;'),
+            'url': item['external_urls']['spotify'],
+            'image': item['images'][1]['url']
+        }
+        top_list.append(dict)
+    return top_list.reverse()
+
 def get_np():
     data1 = spotify_request('me/player/currently-playing')
     data2 = spotify_request('me/top/tracks?limit=1&time_range=short_term')
@@ -45,7 +60,8 @@ def get_np():
             'artist': data2['items'][0]['artists'][0]['name'].replace('&', '&amp;'),
             'song': data2['items'][0]['name'].replace('&', '&amp;'),
             'url' : data2['items'][0]['external_urls']['spotify'],
-        }
+        },
+        'all-top': get_all_top()
     }
 
 app = Flask(__name__)
