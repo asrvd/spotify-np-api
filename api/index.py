@@ -41,11 +41,13 @@ def get_all_top():
             'image': item['album']['images'][1]['url']
         }
         top_list.append(dict)
-    return top_list.reverse()
+    top_list.reverse()
+    return top_list
 
 def get_np():
     data1 = spotify_request('me/player/currently-playing')
     data2 = spotify_request('me/top/tracks?limit=1&time_range=short_term')
+    top_list = get_all_top()
     if data1:
         item = data1['item']
     else:
@@ -61,7 +63,7 @@ def get_np():
             'song': data2['items'][0]['name'].replace('&', '&amp;'),
             'url' : data2['items'][0]['external_urls']['spotify'],
         },
-        'all-top': get_all_top()
+        'all-top': top_list
     }
 
 app = Flask(__name__)
